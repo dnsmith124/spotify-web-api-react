@@ -14,7 +14,9 @@ const SpotifySidebarOption = ({ title, Icon, id }) => {
   return (
     <div className="spotify-sidebar-option py-[4px]">
       {Icon && <Icon className="spotify-sidebar-option__icon" />}
-      <button onClick={handleClick} className={(currentPlaylistID === id) ? 'active' : 'inactive'}><h4>{title}</h4></button>
+      <button onClick={handleClick} className={`max-w-full ${(currentPlaylistID === id) ? 'active' : 'inactive'}`}>
+        <h4 className="whitespace-nowrap overflow-hidden overflow-ellipsis">{title}</h4>
+      </button>
     </div>
   )
 }

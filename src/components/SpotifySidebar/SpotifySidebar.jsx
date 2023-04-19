@@ -1,16 +1,17 @@
 import React from "react";
 import SpotifySidebarOption from "../SpotifySidebarOption/SpotifySidebarOption";
 import { useDataLayerValue } from "../../DataLayer";
-import spotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
+import spotifyLogoWhite from "../../assets/Spotify_Logo_RGB_White.png";
+import spotifyLogoGreen from "../../assets/SpotifyLogo.png";
 
 const SpotifySidebar = () => {
-  const [{ playlists }] = useDataLayerValue();
+  const [{ playlists, darkMode }] = useDataLayerValue();
 
   return (
-    <div className="dark:bg-black p-[20px]">
+    <div className="dark:bg-black p-[20px] border-r-[1px] dark:border-r-0">
       <a href="/" className="block mb-[20px]">
         <img
-          src={spotifyLogo}
+          src={(darkMode) ? spotifyLogoWhite : spotifyLogoGreen}
           className="spotify-logo max-w-[125px]"
           alt="Spotify logo"
         />
