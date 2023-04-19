@@ -10,6 +10,7 @@ This project is currently in development. Users can authenticate with Spotify, t
 
 - [x] User Authentication
 - [x] Display & Browse User's Saved Playlists
+- [x] Light/Dark Mode Toggle
 - [ ] Playback 
 - [ ] Display User's Saved Tracks
 - [ ] Playlist Editing/Creation/Deletion 
