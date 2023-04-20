@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import SpotifyLogin from '../SpotifyLogin/SpotifyLogin';
 import SpotifyApp from '../SpotifyApp/SpotifyApp';
-import SpotifyFooter from '../SpotifyFooter/SpotifyFooter';
 import SpotifyWebApi from "spotify-web-api-js";
 import { useDataLayerValue } from '../../DataLayer';
 import { handleLogin, handleFetchAndSetToken } from '../../SpotifyAuth';
@@ -31,7 +30,6 @@ const Spotify = () => {
           ? <SpotifyApp spotify={spotify} /> 
           : <SpotifyLogin handleLogin={()=>handleLogin(clientId, redirectUri)} />
         }
-        <SpotifyFooter />
       </div>
     </div>
   )
