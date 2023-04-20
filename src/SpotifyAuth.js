@@ -61,7 +61,8 @@ export const handleLogin = async (clientId, redirectUri) => {
   
   generateCodeChallenge(codeVerifier).then(codeChallenge => {
     let state = generateRandomString(16);
-    let scope = 'user-read-private user-read-email';
+    let scope = `user-read-email user-library-read user-top-read user-read-recently-played 
+      user-read-playback-state user-modify-playback-state user-read-currently-playing`;
   
     localStorage.setItem('code_verifier', codeVerifier);
   
