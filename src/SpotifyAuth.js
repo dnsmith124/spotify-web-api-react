@@ -111,7 +111,7 @@ export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispat
     body: params
   })
   .then(res=>handleFetchErrors(res,()=>{
-    console.error("Your token appears to have expired, returning to the home page to log in again.");
+    console.error("Your access code appears to have expired, returning to the home page to log in again.");
     window.location.href = '/';
   }))
   .then(res => {return res.json()})
