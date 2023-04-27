@@ -2,6 +2,8 @@
 
 A React app recreating Spotify's UI via spotify-web-api and spotify-web-api-js.
 
+#### NOTE: This project uses Spotify's web api, and is currently in developer mode. This means that only users who have been manually added can properly authenticate. Once the app is complete, I will submit a request with Spotify to move the project from developer mode to extended quota mode, which will allow any user to authenticate.  
+
 Demo available here: [https://spotify.dnswebdev.com/](https://spotify.dnswebdev.com/)
 
 ## Project Status
