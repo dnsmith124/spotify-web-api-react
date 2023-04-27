@@ -8,7 +8,7 @@ const SpotifySidebar = () => {
   const [{ playlists, darkMode }] = useDataLayerValue();
 
   return (
-    <div className="dark:bg-black p-[20px] border-r-[1px] dark:border-r-0">
+    <div className="dark:bg-black p-[20px] border-r-[1px] dark:border-r-0 min-h-screen">
       <a href="/" className="block mb-[20px]">
         <img
           src={(darkMode) ? spotifyLogoWhite : spotifyLogoGreen}
