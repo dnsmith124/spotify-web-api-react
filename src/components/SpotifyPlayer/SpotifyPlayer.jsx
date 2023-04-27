@@ -23,20 +23,6 @@ const SpotifyPlayer = () => {
     ? currentPlaybackState.item?.artists[0].name
     : '';  
 
-  const getPlaybackState = (instance) => {
-    instance.getMyCurrentPlaybackState().then(
-      function (data) {
-        dispatch({
-          type: "SET_CURRENT_PLAYBACK_STATE",
-          currentPlaybackState: data,
-        });
-      },
-      function (err) {
-        console.error(err);
-      }
-    );
-  }
-
   const handleSkipToNext = (instance) => {
     instance.skipToNext().then(() => {
       updateCurrentPlaybackState(instance, dispatch)
