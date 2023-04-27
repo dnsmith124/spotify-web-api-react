@@ -2,6 +2,8 @@
 
 A React app recreating Spotify's UI via spotify-web-api and spotify-web-api-js.
 
+Demo available here: [https://spotify.dnswebdev.com/](https://spotify.dnswebdev.com/)
+
 ## Project Status
 
 This project is currently in development. Users can authenticate with Spotify, then browse through their saved playlists. 
