@@ -11,7 +11,7 @@ const Spotify = () => {
 
   const clientId = 'cbde493d58af43a6b6352ce37fe428d0';
   const redirectUri = window.location.origin;
-  const [{ token, darkMode }, dispatch] = useDataLayerValue();
+  const [{ token, darkMode, spotifyInstance }, dispatch] = useDataLayerValue();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
