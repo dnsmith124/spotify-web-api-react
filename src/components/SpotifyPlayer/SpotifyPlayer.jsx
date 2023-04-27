@@ -1,6 +1,7 @@
 import { ReactComponent as Play } from '../../assets/icons/play.svg';
 import { ReactComponent as Forward } from '../../assets/icons/forward.svg';
 import { ReactComponent as Pause } from '../../assets/icons/pause.svg';
+import placeholder from '../../assets/placeholder.png'; 
 import { useDataLayerValue } from '../../DataLayer';
 import { useEffect } from 'react';
 import { updateCurrentPlaybackState } from '../../utilities/playbackFunctions';
@@ -11,7 +12,7 @@ const SpotifyPlayer = () => {
   
   const albumArtURL = (currentPlaybackState !== null && currentPlaybackState.item)
     ? currentPlaybackState.item.album?.images[2]?.url
-    : '';
+    : placeholder;
   const albumArtAltText = (currentPlaybackState !== null && currentPlaybackState.item)
     ? `Album art: ${currentPlaybackState.item.album?.name}`
     : 'Album art placeholder image';
