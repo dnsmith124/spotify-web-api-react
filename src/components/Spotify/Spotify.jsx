@@ -17,8 +17,14 @@ const Spotify = () => {
     const urlParams = new URLSearchParams(window.location.search);
     let code = urlParams.get('code');
 
-    if(code && !token) {
-      handleFetchAndSetToken(clientId, redirectUri, code, dispatch, spotify);
+    if((code && !token) && spotifyInstance) {
+      handleFetchAndSetToken(clientId, redirectUri, code, dispatch, spotifyInstance);
+    }
+    if(!spotifyInstance) {
+      dispatch({
+        type: "SET_SPOTIFY_INSTANCE",
+        spotifyInstance: spotify,
+      });
     }
   });
 
@@ -27,7 +33,7 @@ const Spotify = () => {
       <div className={` bg-white dark:bg-neutral-900 min-h-screen`}>
         {
           token 
-          ? <SpotifyApp spotify={spotify} /> 
+          ? <SpotifyApp /> 
           : <SpotifyLogin handleLogin={()=>handleLogin(clientId, redirectUri)} />
         }
       </div>

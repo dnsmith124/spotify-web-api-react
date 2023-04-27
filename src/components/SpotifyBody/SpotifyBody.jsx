@@ -3,22 +3,22 @@ import { useDataLayerValue } from "../../DataLayer";
 import SongRow from "../SongRow/SongRow";
 import SpotifyHeader from "../SpotifyHeader/SpotifyHeader";
 
-const SpotifyBody = ({ spotify }) => {
-  const [{ currentPlaylist, currentPlaylistID, token }, dispatch] = useDataLayerValue();
+const SpotifyBody = () => {
+  const [{ currentPlaylist, currentPlaylistID, token, spotifyInstance }, dispatch] = useDataLayerValue();
 
   useEffect(() => { 
     if(currentPlaylistID) {
-      spotify.getPlaylist(currentPlaylistID).then((playlist) => {
+      spotifyInstance.getPlaylist(currentPlaylistID).then((playlist) => {
         dispatch({
           type: "SET_CURRENT_PLAYLIST",
           currentPlaylist: playlist,
         });
       });
     }
-  }, [currentPlaylistID, dispatch, spotify, token]);
+  }, [currentPlaylistID, dispatch, spotifyInstance, token]);
 
   return (
-    <div className="dark:bg-spotify-dark-gray py-[20px] dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray">
+    <div className="dark:bg-spotify-dark-gray pb-[20px] dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray">
       <SpotifyHeader />
       {currentPlaylist !== null
         ? <div className="px-[30px]">

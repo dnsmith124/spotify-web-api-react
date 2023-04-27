@@ -6,7 +6,7 @@ const SpotifyHeader = () => {
   const [{ user }] = useDataLayerValue();
 
   return (
-    <header className="p-[20px] sticky top-0">
+    <header className="p-[15px] sticky top-0">
       <div className="max-w-[1450px] flex justify-end ml-auto mr-auto">
         <div >
           {

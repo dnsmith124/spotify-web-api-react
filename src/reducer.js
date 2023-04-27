@@ -1,9 +1,11 @@
 export const initialState = {
   user: null,
   token: null,
+  spotifyInstance: null,
   playlists: [],
   currentPlaylistID: null,
   currentPlaylist: null,
+  currentPlaybackState: null,
   playing: false,
   item: null,
   darkMode: true,
@@ -23,6 +25,11 @@ const reducer = (state, action) => {
         ...state,
         token: action.token,
       };
+    case "SET_SPOTIFY_INSTANCE":
+      return {
+        ...state,
+        spotifyInstance: action.spotifyInstance,
+      };
     case "SET_PLAYLISTS":
       return {
         ...state,
@@ -38,10 +45,15 @@ const reducer = (state, action) => {
         ...state,
         currentPlaylist: action.currentPlaylist,
       };
+    case "SET_CURRENT_PLAYBACK_STATE":
+      return {
+        ...state,
+        currentPlaybackState: action.currentPlaybackState,
+      };
     case "SET_DISCOVER_WEEKLY":
       return {
         ...state,
-        discover_weekly: action.discover_weekly,
+        discoverWeekly: action.discoverWeekly,
       };
     case "SET_DARK_MODE":
       return {
