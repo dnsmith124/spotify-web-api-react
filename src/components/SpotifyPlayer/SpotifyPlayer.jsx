@@ -22,27 +22,9 @@ const SpotifyPlayer = () => {
   const playbackItemArtist = (currentPlaybackState !== null && currentPlaybackState.item)
     ? currentPlaybackState.item?.artists[0].name
     : '';  
-
-  const handleSkipToNext = (instance) => {
-    instance.skipToNext().then(() => {
-      updateCurrentPlaybackState(instance, dispatch)
-    });
-  }
   
-  const handleSkipToPrevious = (instance) => {
-    instance.skipToPrevious().then(() => {
-      updateCurrentPlaybackState(instance, dispatch)
-    });
-  }
-  
-  const handlePause = (instance) => {
-    instance.pause().then(() => {
-      updateCurrentPlaybackState(instance, dispatch)
-    });
-  }
-  
-  const handlePlay = (instance) => {
-    instance.play().then(() => {
+  const handlePlaybackChange = (instance, playbackFunction) => {
+    playbackFunction().then(() => {
       updateCurrentPlaybackState(instance, dispatch)
     });
   }
@@ -78,22 +60,22 @@ const SpotifyPlayer = () => {
         <div className="flex">
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all rotate-180"
-            onClick={()=>handleSkipToPrevious(spotifyInstance)}
+            onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.skipToPrevious)}
           />
           {
             (currentPlaybackState !== null && currentPlaybackState.is_playing)
             ? <Pause 
                 className="dark:fill-white fill-spotify-dark-gray w-[50px] mx-[15px] cursor-pointer hover:scale-[1.05] transition-all"
-                onClick={()=>handlePause(spotifyInstance)}
+                onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.pause)}
               />
             : <Play 
                 className="dark:fill-white fill-spotify-dark-gray w-[50px] mx-[15px] cursor-pointer hover:scale-[1.05] transition-all"
-                onClick={()=>handlePlay(spotifyInstance)}
+                onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.play)}
               />
           }
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all"
-            onClick={()=>handleSkipToNext(spotifyInstance)}
+            onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.skipToNext)}
           />
         </div>
         <div></div>
