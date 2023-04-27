@@ -10,7 +10,7 @@ const spotify = new SpotifyWebApi();
 const Spotify = () => {
 
   const clientId = 'cbde493d58af43a6b6352ce37fe428d0';
-  const redirectUri = 'http://localhost:5173';
+  const redirectUri = window.location.origin;
   const [{ token, darkMode }, dispatch] = useDataLayerValue();
 
   useEffect(() => {
