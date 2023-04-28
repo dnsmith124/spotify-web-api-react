@@ -117,7 +117,6 @@ export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispat
   .then(res => {return res.json()})
   .then(data => {
     let newToken = data.access_token;
-    console.log(newToken)
       dispatch({
         type: "SET_TOKEN",
         token: newToken,

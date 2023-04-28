@@ -6,8 +6,8 @@ export const initialState = {
   currentPlaylistID: null,
   currentPlaylist: null,
   currentPlaybackState: null,
-  playing: false,
-  item: null,
+  availableDevices: null,
+  discoverWeekly: null,
   darkMode: true,
 };
 
@@ -46,9 +46,16 @@ const reducer = (state, action) => {
         currentPlaylist: action.currentPlaylist,
       };
     case "SET_CURRENT_PLAYBACK_STATE":
+      if(state.currentPlaybackState === action.currentPlaybackState)
+        return {...state};
       return {
         ...state,
         currentPlaybackState: action.currentPlaybackState,
+      };
+    case "SET_AVAILABLE_DEVICES":
+      return {
+        ...state,
+        availableDevices: action.availableDevices,
       };
     case "SET_DISCOVER_WEEKLY":
       return {
