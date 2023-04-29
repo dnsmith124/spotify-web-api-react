@@ -95,6 +95,23 @@ export const getProfile = async (token) => {
 
   return await response.json();
 }
+
+/**
+ * This function retrieves the user's playlists by making a GET request to the Spotify Web API.
+ * @param {string} token - The access token required for authorization to the Spotify API.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the user's playlists.
+*/
+export const getUserPlaylists = async (token, userId, limit = 50) => {
+
+  const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists?limit=${limit}`, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }).then(handleFetchErrors);
+
+  return await response.json();
+}
+
 export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispatch, spotify) => {
   const verifier = localStorage.getItem("code_verifier");
 
@@ -111,34 +128,35 @@ export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispat
     body: params
   })
   .then(res=>handleFetchErrors(res,()=>{
-    console.error("Your access code appears to have expired, returning to the home page to log in again.");
+    console.error("Your access code appears to have expired, returning to the home page.");
     window.location.href = '/';
   }))
   .then(res => {return res.json()})
   .then(data => {
     let newToken = data.access_token;
-      dispatch({
-        type: "SET_TOKEN",
-        token: newToken,
-      });
-      spotify.setAccessToken(newToken);
-      spotify.getMe()
-        .then(
-          function (user) {
-            dispatch({
-              type: "SET_USER",
-              user,
-            });
-          },
-          function (err) {
-            console.error(err);
-          }
-        )
-      spotify.getUserPlaylists({limit:50}).then((playlists) => {
-        dispatch({
-          type: "SET_PLAYLISTS",
-          playlists,
-        });
-      });
+    dispatch({
+      type: "SET_TOKEN",
+      token: newToken,
+    });
+    spotify.setAccessToken(newToken);
+    getProfile(newToken)
+      .then(
+        (user) => {
+          let newUser = user;
+          dispatch({
+            type: "SET_USER",
+            user: newUser,
+          });
+          getUserPlaylists(newToken, newUser?.id)
+            .then(
+              (playlists) => {
+                dispatch({
+                  type: "SET_PLAYLISTS",
+                  playlists,
+                });
+              }
+            )
+        }
+      )
   })
 }

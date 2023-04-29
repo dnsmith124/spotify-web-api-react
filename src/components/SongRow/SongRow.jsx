@@ -1,24 +1,15 @@
 import { useDataLayerValue } from '../../DataLayer';
+import { handlePlayTrack } from '../../utilities/playbackFunctions';
 import { updateCurrentPlaybackState } from '../../utilities/playbackFunctions';
 import { handleNoActiveDevicesError } from '../../utilities/playbackFunctions';
 
 const SongRow = ({ track, index }) => {
 
-  const [{ spotifyInstance }, dispatch] = useDataLayerValue();
-
-  const handlePlayTrack = (track, instance) => {
-    instance.play({
-      uris: [track.uri],
-      position_ms: 0
-    }).then( 
-      () => {updateCurrentPlaybackState(instance, dispatch)},
-      handleNoActiveDevicesError
-    );
-  }
+  const [{ token }, dispatch] = useDataLayerValue();
 
   return (
     <button
-      onClick={()=>handlePlayTrack(track, spotifyInstance)}
+      onClick={()=>{handlePlayTrack(token, track.uri).then((res)=> console.log(res))}}
       className="grid p-[5px] gap-y-[20px] gap-x-[15px] transition-colors 
         grid-cols-[40px_40px_1fr_.5fr] my-5px hover:bg-spotify-hover-gray
         items-center w-full" 

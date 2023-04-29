@@ -34,10 +34,10 @@ const SpotifyPlayer = () => {
   const handlePlaybackChange = (instance, playbackFunction) => {
     playbackFunction()
       .then(
-        () => {},
+        updateCurrentPlaybackState(instance, dispatch),
         handleNoActiveDevicesError
       )
-      .then(() => {updateCurrentPlaybackState(instance, dispatch)});
+      // .then(() => {updateCurrentPlaybackState(instance, dispatch)});
   }
 
   const handleCloseAvailableDevices = useCallback(() => {
@@ -49,13 +49,13 @@ const SpotifyPlayer = () => {
     // Get & Set initial playback state
     updateCurrentPlaybackState(spotifyInstance, dispatch)
     // Poll for playback state 
-    const interval = setInterval(() => {
-      updateCurrentPlaybackState(spotifyInstance, dispatch)
-    }, 5000);
+    // const interval = setInterval(() => {
+    //   updateCurrentPlaybackState(spotifyInstance, dispatch)
+    // }, 5000);
   
-    return () => {
-      clearInterval(interval);
-    };
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []); 
   
 
