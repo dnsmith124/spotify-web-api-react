@@ -1,17 +1,14 @@
 import { useDataLayerValue } from '../../DataLayer';
-import { updateCurrentPlaybackState } from '../../utilities/playbackFunctions';
 
 const SongRow = ({ track, index }) => {
 
-  const [{ spotifyInstance }, dispatch] = useDataLayerValue();
+  const [{ spotifyInstance }] = useDataLayerValue();
 
   const handlePlayTrack = (track, instance) => {
     instance.play({
       uris: [track.uri],
       position_ms: 0
-    }).then( (data) =>
-      updateCurrentPlaybackState(instance, dispatch)
-    );
+    });
   }
 
   return (
