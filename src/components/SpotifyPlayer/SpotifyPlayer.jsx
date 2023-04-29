@@ -9,10 +9,13 @@ import { faComputer } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
+import { handleNoActiveDevicesError } from '../../utilities/playbackFunctions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SpotifyPlayer = () => {
 
-  const [{ spotifyInstance, currentPlaybackState, availableDevices }, dispatch] = useDataLayerValue();
+  const [{ spotifyInstance, currentPlaybackState, availableDevices, darkMode }, dispatch] = useDataLayerValue();
   const [availableDevicesOpen, setAvailableDevicesOpen] = useState(false);
   
   const albumArtURL = (currentPlaybackState !== null && currentPlaybackState.item)
@@ -29,13 +32,15 @@ const SpotifyPlayer = () => {
     : '';  
   
   const handlePlaybackChange = (instance, playbackFunction) => {
-    playbackFunction().then(() => {
-      updateCurrentPlaybackState(instance, dispatch)
-    });
+    playbackFunction()
+      .then(
+        () => {},
+        handleNoActiveDevicesError
+      )
+      .then(() => {updateCurrentPlaybackState(instance, dispatch)});
   }
 
   const handleCloseAvailableDevices = useCallback(() => {
-    console.log(availableDevicesOpen);
     if(availableDevicesOpen)
       setAvailableDevicesOpen(false)
   }, [availableDevicesOpen]);
@@ -56,6 +61,10 @@ const SpotifyPlayer = () => {
 
   return(
     <div className="p-[20px]">
+      <ToastContainer 
+        theme={darkMode ? 'dark' : 'light'} 
+        position="top-center"
+      />
       <div className="flex justify-between w-full">
         <div>
           <div className='flex'>
