@@ -36,8 +36,7 @@ const SpotifyPlayer = () => {
       .then(
         () => {},
         handleNoActiveDevicesError
-      )
-      .then(() => {updateCurrentPlaybackState(instance, dispatch)});
+      );
   }
 
   const handleCloseAvailableDevices = useCallback(() => {
@@ -51,7 +50,7 @@ const SpotifyPlayer = () => {
     // Poll for playback state 
     const interval = setInterval(() => {
       updateCurrentPlaybackState(spotifyInstance, dispatch)
-    }, 5000);
+    }, 1000);
   
     return () => {
       clearInterval(interval);
