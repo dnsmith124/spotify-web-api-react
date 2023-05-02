@@ -1,4 +1,5 @@
 import { useDataLayerValue } from '../../DataLayer';
+import { handleNoActiveDevicesError } from '../../utilities/playbackFunctions';
 
 const SongRow = ({ track, index }) => {
 
@@ -8,7 +9,11 @@ const SongRow = ({ track, index }) => {
     instance.play({
       uris: [track.uri],
       position_ms: 0
-    });
+    })
+    .then(
+      () => {},
+      handleNoActiveDevicesError
+    );
   }
 
   return (
