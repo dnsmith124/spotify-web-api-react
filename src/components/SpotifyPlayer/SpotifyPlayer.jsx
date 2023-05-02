@@ -108,14 +108,14 @@ const SpotifyPlayer = () => {
           <div>
             <OutsideClickHandler 
               onOutsideClick={handleCloseAvailableDevices} 
-              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
+              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-spotify-green text-white dark:text-spotify-black dark:bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
               >
-              <p className="font-bold whitespace-nowrap mb-[10px]">Available Devices:</p>
+              <p className="font-bold whitespace-nowrap mb-[10px] dark:text-white">Available Devices:</p>
               {
                 availableDevices &&
                 availableDevices.devices.map((item) => {
                   return(
-                    <div key={item.id} className={`${item.is_active ? `active text-spotify-green`: `inactive`} flex mb-[8px]`}>
+                    <div key={item.id} className={`${item.is_active ? `active font-bold text-spotify-black dark:text-spotify-green`: `inactive dark:text-white`} flex mb-[8px]`}>
                       {
                         item.type === 'Smartphone' &&
                         <FontAwesomeIcon icon={faMobile}  className="w-[20px]" />
@@ -131,7 +131,7 @@ const SpotifyPlayer = () => {
                   )
                 })
               }
-              <span className="block h-0 w-0 border-transparent border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
+              <span className="block h-0 w-0 border-transparent border-t-spotify-green dark:border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
             </OutsideClickHandler>
           </div>
         </div>
