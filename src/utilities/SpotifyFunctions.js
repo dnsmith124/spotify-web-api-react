@@ -10,7 +10,6 @@ import { wait, handleFetchErrors } from "./utilities";
  * @returns {Promise<Response>} - A Promise object that resolves to a Response object returned by the fetch function.
 */
 export const handleSpotifyAPIRequest = async (token, url, method = 'POST', body = false, onErrorCallback = ()=>{}) => {
-
   let options = {
     method: method,
     headers: {
@@ -75,7 +74,6 @@ const generateCodeChallenge = async (codeVerifier) => {
  * @returns {void}
 */
 export const handleLogin = async (clientId, redirectUri) => {
-  
   let codeVerifier = generateRandomString(128);
   
   generateCodeChallenge(codeVerifier).then(codeChallenge => {
@@ -106,7 +104,6 @@ export const handleLogin = async (clientId, redirectUri) => {
  * @returns {void}
 */
 export const handleUpdateProfile = async (token, dispatch) => {
-
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
@@ -137,7 +134,6 @@ export const handleUpdateProfile = async (token, dispatch) => {
  * @returns {void} 
 */
 export const handleUpdatePlaybackState = async (token, dispatch) => {
-  
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
@@ -162,7 +158,6 @@ export const handleUpdatePlaybackState = async (token, dispatch) => {
  * @returns {void}
 */
 export const handleUpdateAvailableDevices = async (token, dispatch) => {
-  
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player/devices', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
@@ -180,8 +175,6 @@ export const handleUpdateAvailableDevices = async (token, dispatch) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing the user's playlists.
 */
 export const getUserPlaylists = async (token, userId, limit = 50) => {
-  
-  
   const response = await handleSpotifyAPIRequest(
     token, 
     `https://api.spotify.com/v1/users/${userId}/playlists?limit=${limit}`, 
@@ -192,11 +185,16 @@ export const getUserPlaylists = async (token, userId, limit = 50) => {
 }
 
 /**
- * This function retrieves the user's playlists by making a GET request to the Spotify Web API.
- * @param {string} token - The access token required for authorization to the Spotify API.
- * @returns {Promise<Object>} A promise that resolves to an object containing the user's playlists.
+ * Initializes the application by exchanging the authorization code for an access token,
+ * setting the token in state, and calling functions to update the user profile, playback state,
+ * and available devices. If the access code has expired, the user is redirected to the home page.
+ * @param {string} clientId - The client ID for the Spotify API.
+ * @param {string} redirectUri - The redirect URI for the Spotify API.
+ * @param {string} code - The authorization code received from Spotify.
+ * @param {function} dispatch - A function to update the application state.
+ * @returns {void} 
 */
-export const handleApplicationInitialization = async (clientId, redirectUri, code, dispatch, spotify) => {
+export const handleApplicationInitialization = async (clientId, redirectUri, code, dispatch) => {
   const verifier = localStorage.getItem("code_verifier");
 
   const params = new URLSearchParams();
@@ -225,5 +223,25 @@ export const handleApplicationInitialization = async (clientId, redirectUri, cod
     handleUpdateProfile(newToken, dispatch);
     handleUpdatePlaybackState(newToken, dispatch);
     handleUpdateAvailableDevices(newToken, dispatch);
+  })
+}
+
+/**
+ * Updates the current playlist in the state by making a GET request to Spotify API
+ * @param {string} token - Authorization token for Spotify API
+ * @param {string} playlistID - ID of the playlist to be updated
+ * @param {function} dispatch - Function used to dispatch state updates
+ * @returns {void}
+*/
+export const handleUpdateCurrentPlaylist = async (token, playlistID, dispatch) => {
+  
+  handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/playlists/${playlistID}`, 'GET')
+  .then(handleFetchErrors)
+  .then(res => res.json())
+  .then(data => {
+    dispatch({
+      type: "SET_CURRENT_PLAYLIST",
+      currentPlaylist: data,
+    });
   })
 }

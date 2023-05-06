@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDataLayerValue } from "../../DataLayer";
+import { handleUpdateCurrentPlaylist } from "../../utilities/SpotifyFunctions";
 import TrackRow from "../TrackRow/TrackRow";
 import SpotifyHeader from "../SpotifyHeader/SpotifyHeader";
 
@@ -8,12 +9,7 @@ const SpotifyBody = () => {
 
   useEffect(() => { 
     if(currentPlaylistID) {
-      spotifyInstance.getPlaylist(currentPlaylistID).then((playlist) => {
-        dispatch({
-          type: "SET_CURRENT_PLAYLIST",
-          currentPlaylist: playlist,
-        });
-      });
+      handleUpdateCurrentPlaylist(token, currentPlaylistID, dispatch);
     }
   }, [currentPlaylistID, dispatch, spotifyInstance, token]);
 
