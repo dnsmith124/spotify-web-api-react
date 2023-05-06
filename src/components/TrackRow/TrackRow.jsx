@@ -1,7 +1,7 @@
 import { useDataLayerValue } from '../../DataLayer';
 import { handlePlayTrack } from '../../utilities/playbackFunctions';
 
-const SongRow = ({ track, index }) => {
+const TrackRow = ({ track, index }) => {
 
   const [{ token }, dispatch] = useDataLayerValue();
 
@@ -34,4 +34,4 @@ const SongRow = ({ track, index }) => {
   );
 }
 
-export default SongRow;
+export default TrackRow;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDataLayerValue } from "../../DataLayer";
-import SongRow from "../SongRow/SongRow";
+import TrackRow from "../TrackRow/TrackRow";
 import SpotifyHeader from "../SpotifyHeader/SpotifyHeader";
 
 const SpotifyBody = () => {
@@ -32,7 +32,7 @@ const SpotifyBody = () => {
             </div>
             <div className=" pt-[30px]">
               {currentPlaylist?.tracks.items.map((item, i) => (
-                <SongRow track={item.track} index={i} key={i} />
+                <TrackRow track={item.track} index={i} key={i} />
               ))}
             </div>
           </div>
