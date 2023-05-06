@@ -1,21 +1,17 @@
 import { useDataLayerValue } from '../../DataLayer';
+import { handlePlayTrack } from '../../utilities/playbackFunctions';
 
-const SongRow = ({ track, index }) => {
+const TrackRow = ({ track, index }) => {
 
-  const [{ spotifyInstance }] = useDataLayerValue();
-
-  const handlePlayTrack = (track, instance) => {
-    instance.play({
-      uris: [track.uri],
-      position_ms: 0
-    });
-  }
+  const [{ token }, dispatch] = useDataLayerValue();
 
   return (
     <button
-      onClick={()=>handlePlayTrack(track, spotifyInstance)}
+      onClick={() => {
+        handlePlayTrack(token, track.uri, dispatch);
+      }}
       className="grid p-[5px] gap-y-[20px] gap-x-[15px] transition-colors 
-        grid-cols-[40px_40px_1fr_.5fr] my-5px hover:bg-spotify-hover-gray
+        grid-cols-[40px_40px_1fr_.5fr] my-5px hover:bg-gray-100 dark:hover:bg-spotify-hover-gray
         items-center w-full" 
       target="_blank" 
       rel="noreferrer"
@@ -28,7 +24,7 @@ const SongRow = ({ track, index }) => {
       <div className="text-left">
         <p>{track.name}</p>
         <p>
-          {track.artists.map((artist, i) => artist.name).join(", ")}
+          {track.artists.map((artist) => artist.name).join(", ")}
         </p>
       </div>
       <div className="text-left">
@@ -38,4 +34,4 @@ const SongRow = ({ track, index }) => {
   );
 }
 
-export default SongRow;
+export default TrackRow;

@@ -4,18 +4,18 @@ import { ReactComponent as Pause } from '../../assets/icons/pause.svg';
 import placeholder from '../../assets/placeholder.png'; 
 import { useDataLayerValue } from '../../DataLayer';
 import { useEffect, useState, useCallback } from 'react';
-import { updateCurrentPlaybackState } from '../../utilities/playbackFunctions';
 import { faComputer } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
-import { handleNoActiveDevicesError } from '../../utilities/playbackFunctions';
+import { handleUpdatePlaybackState } from '../../utilities/SpotifyFunctions';
+import { handlePausePlay, handleNextPrevious } from '../../utilities/playbackFunctions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SpotifyPlayer = () => {
 
-  const [{ spotifyInstance, currentPlaybackState, availableDevices, darkMode }, dispatch] = useDataLayerValue();
+  const [{ currentPlaybackState, availableDevices, darkMode, token }, dispatch] = useDataLayerValue();
   const [availableDevicesOpen, setAvailableDevicesOpen] = useState(false);
   
   const albumArtURL = (currentPlaybackState !== null && currentPlaybackState.item)
@@ -30,14 +30,6 @@ const SpotifyPlayer = () => {
   const playbackItemArtist = (currentPlaybackState !== null && currentPlaybackState.item)
     ? currentPlaybackState.item?.artists[0].name
     : '';  
-  
-  const handlePlaybackChange = (instance, playbackFunction) => {
-    playbackFunction()
-      .then(
-        () => {},
-        handleNoActiveDevicesError
-      );
-  }
 
   const handleCloseAvailableDevices = useCallback(() => {
     if(availableDevicesOpen)
@@ -45,12 +37,10 @@ const SpotifyPlayer = () => {
   }, [availableDevicesOpen]);
 
   useEffect(() => {
-    // Get & Set initial playback state
-    updateCurrentPlaybackState(spotifyInstance, dispatch)
     // Poll for playback state 
     const interval = setInterval(() => {
-      updateCurrentPlaybackState(spotifyInstance, dispatch)
-    }, 1000);
+      handleUpdatePlaybackState(token, dispatch)
+    }, 2000);
   
     return () => {
       clearInterval(interval);
@@ -65,15 +55,15 @@ const SpotifyPlayer = () => {
         position="top-center"
       />
       <div className="flex justify-between w-full">
-        <div>
+        <div className="w-80">
           <div className='flex'>
             <img 
               src={albumArtURL}
               alt={albumArtAltText} 
-              className="mr-[20px]"
+              className="mr-[20px] w-16 h-16 object-fill object-center"
             />
             <div className="grid content-center">
-              <p className="font-bold">{playbackItemName}</p>
+              <p className="font-bold overflow-hidden text-ellipsis whitespace-nowrap">{playbackItemName}</p>
               <p className="text-[14px] text-gray-400">{playbackItemArtist}</p>
             </div>
           </div>
@@ -81,22 +71,22 @@ const SpotifyPlayer = () => {
         <div className="flex">
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all rotate-180"
-            onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.skipToPrevious)}
+            onClick={()=>handleNextPrevious(false, token, dispatch)}
           />
           {
             (currentPlaybackState !== null && currentPlaybackState.is_playing)
             ? <Pause 
                 className="dark:fill-white fill-spotify-dark-gray w-[50px] mx-[15px] cursor-pointer hover:scale-[1.05] transition-all"
-                onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.pause)}
+                onClick={()=>handlePausePlay(false, token, dispatch)}
               />
             : <Play 
                 className="dark:fill-white fill-spotify-dark-gray w-[50px] mx-[15px] cursor-pointer hover:scale-[1.05] transition-all"
-                onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.play)}
+                onClick={()=>handlePausePlay(true, token, dispatch)}
               />
           }
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all"
-            onClick={()=>handlePlaybackChange(spotifyInstance, spotifyInstance.skipToNext)}
+            onClick={()=>handleNextPrevious(true, token, dispatch)}
           />
         </div>
         <div className="flex items-center px-[80px] relative">
@@ -108,7 +98,7 @@ const SpotifyPlayer = () => {
           <div>
             <OutsideClickHandler 
               onOutsideClick={handleCloseAvailableDevices} 
-              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
+              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-gray-200 dark:bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
               >
               <p className="font-bold whitespace-nowrap mb-[10px]">Available Devices:</p>
               {
@@ -131,7 +121,7 @@ const SpotifyPlayer = () => {
                   )
                 })
               }
-              <span className="block h-0 w-0 border-transparent border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
+              <span className="block h-0 w-0 border-transparent border-t-gray-200 dark:border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
             </OutsideClickHandler>
           </div>
         </div>
