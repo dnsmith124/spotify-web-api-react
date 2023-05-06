@@ -1,6 +1,6 @@
 ## spotify-web-api-react
 
-A React app recreating Spotify's UI via spotify-web-api and spotify-web-api-js.
+A React app recreating Spotify's UI.
 
 #### NOTE: This project uses Spotify's web api, and is currently in developer mode. This means that only users who have been manually added can properly authenticate. Once the app is complete, I will submit a request with Spotify to move the project from developer mode to extended quota mode, which will allow any user to authenticate.  
 
@@ -8,7 +8,9 @@ Demo available here: [https://spotify.dnswebdev.com/](https://spotify.dnswebdev.
 
 ## Project Status
 
-This project is currently in development. Users can authenticate with Spotify, then browse through their saved playlists. 
+This project is currently in development. 
+
+Users can authenticate with Spotify, then browse through their saved playlists. Playback can be controlled as well (play/pause/skip forward/skip back), and users can play songs from their saved playlists by clicking them. 
 
 ## Feature Roadmap
 
@@ -30,8 +32,10 @@ This project is currently in development. Users can authenticate with Spotify, t
 
 ## Technologies used
 
-Vite, Tailwind CSS, and [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js)
+Vite, Tailwind CSS, PostCSS, React Toastify, Fontawesome
 
+Node v18.10.0
+React v18.2.0
 
 ## Installation and Setup Instructions
 
