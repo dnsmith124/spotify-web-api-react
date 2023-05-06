@@ -1,7 +1,6 @@
 export const initialState = {
   user: null,
   token: null,
-  spotifyInstance: null,
   playlists: [],
   currentPlaylistID: null,
   currentPlaylist: null,
@@ -24,11 +23,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         token: action.token,
-      };
-    case "SET_SPOTIFY_INSTANCE":
-      return {
-        ...state,
-        spotifyInstance: action.spotifyInstance,
       };
     case "SET_PLAYLISTS":
       return {
