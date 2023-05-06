@@ -1,18 +1,34 @@
-import { wait } from "./utilities/utilities";
+import { wait, handleFetchErrors } from "./utilities";
 
 /**
- * Handles fetch errors and calls the onErrorCallback function if specified.
- * @param {Response} response - The response object from a fetch call.
- * @param {function} onErrorCallback - The callback function to be called when an error occurs. Defaults to a console.log message.
- * @returns {Response} The response object passed as input if there are no errors.
+ * Function to handle requests to the Spotify API using fetch and an access token.
+ * @param {string} token - The access token required to make authorized requests to the Spotify API.
+ * @param {string} url - The URL to which the request is being made.
+ * @param {string} [method] - The HTTP method to use for the request, defaults to POST.
+ * @param {object} [body] - The body of the request, defaults to false.
+ * @param {function} [onErrorCallback] - A function to be called if an error occurs during the request, defaults to an empty function.
+ * @returns {Promise<Response>} - A Promise object that resolves to a Response object returned by the fetch function.
 */
-export const handleFetchErrors = (response, onErrorCallback = () => console.log('No error callback function specified.')) => {
-  if(!response.ok) {
-    onErrorCallback(response);
-    console.log(response)
-    throw Error(response.statusText);
+export const handleSpotifyAPIRequest = async (token, url, method = 'POST', body = false, onErrorCallback = ()=>{}) => {
+
+  let options = {
+    method: method,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json', 
+    },
   }
-  return response
+  if(body)
+    options.body = JSON.stringify(body);
+
+  return fetch(url, options)
+    .then(res => {
+      if (!res.ok) {
+        onErrorCallback();
+        console.error(res)
+      }
+      return res;
+    })
 }
 
 /**
@@ -91,11 +107,7 @@ export const handleLogin = async (clientId, redirectUri) => {
 */
 export const handleUpdateProfile = async (token, dispatch) => {
 
-  fetch('https://api.spotify.com/v1/me', {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  })
+  handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
   .then(
@@ -125,11 +137,8 @@ export const handleUpdateProfile = async (token, dispatch) => {
  * @returns {void} 
 */
 export const handleUpdatePlaybackState = async (token, dispatch) => {
-  fetch('https://api.spotify.com/v1/me/player', {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  })
+  
+  handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
   .then(async data => {
@@ -153,11 +162,8 @@ export const handleUpdatePlaybackState = async (token, dispatch) => {
  * @returns {void}
 */
 export const handleUpdateAvailableDevices = async (token, dispatch) => {
-  fetch('https://api.spotify.com/v1/me/player/devices', {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  })
+  
+  handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player/devices', 'GET')
   .then(handleFetchErrors)
   .then(res => res.json())
   .then(data => {
@@ -174,12 +180,13 @@ export const handleUpdateAvailableDevices = async (token, dispatch) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing the user's playlists.
 */
 export const getUserPlaylists = async (token, userId, limit = 50) => {
-
-  const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists?limit=${limit}`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }).then(handleFetchErrors);
+  
+  
+  const response = await handleSpotifyAPIRequest(
+    token, 
+    `https://api.spotify.com/v1/users/${userId}/playlists?limit=${limit}`, 
+    'GET')
+  .then(handleFetchErrors);
 
   return await response.json();
 }
@@ -215,7 +222,6 @@ export const handleApplicationInitialization = async (clientId, redirectUri, cod
       type: "SET_TOKEN",
       token: newToken,
     });
-    spotify.setAccessToken(newToken);
     handleUpdateProfile(newToken, dispatch);
     handleUpdatePlaybackState(newToken, dispatch);
     handleUpdateAvailableDevices(newToken, dispatch);

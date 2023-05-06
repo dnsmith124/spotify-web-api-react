@@ -3,7 +3,7 @@ import SpotifyLogin from '../SpotifyLogin/SpotifyLogin';
 import SpotifyApp from '../SpotifyApp/SpotifyApp';
 import SpotifyWebApi from "spotify-web-api-js";
 import { useDataLayerValue } from '../../DataLayer';
-import { handleLogin, handleApplicationInitialization } from '../../SpotifyFunctions';
+import { handleLogin, handleApplicationInitialization } from '../../utilities/SpotifyFunctions';
 
 const spotify = new SpotifyWebApi();
 

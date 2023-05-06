@@ -8,14 +8,14 @@ import { faComputer } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
-import { handleUpdatePlaybackState } from '../../SpotifyFunctions';
+import { handleUpdatePlaybackState } from '../../utilities/SpotifyFunctions';
 import { handlePausePlay } from '../../utilities/playbackFunctions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SpotifyPlayer = () => {
 
-  const [{ spotifyInstance, currentPlaybackState, availableDevices, darkMode, token }, dispatch] = useDataLayerValue();
+  const [{ currentPlaybackState, availableDevices, darkMode, token }, dispatch] = useDataLayerValue();
   const [availableDevicesOpen, setAvailableDevicesOpen] = useState(false);
   
   const albumArtURL = (currentPlaybackState !== null && currentPlaybackState.item)

@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
-import { handleFetchErrors, handleUpdatePlaybackState } from '../SpotifyFunctions';
+import { handleUpdatePlaybackState, handleSpotifyAPIRequest } from './SpotifyFunctions';
+import { handleFetchErrors } from "./utilities";
 
 export const handleNoActiveDevicesError = (err) => {
   console.error(err);
@@ -69,27 +70,4 @@ export const handlePausePlay = async (play = true, token, dispatch) => {
   .catch(error => {
     console.error('Unable to play track:', error);
   });
-}
-
-const handleSpotifyAPIRequest = async (token, url, method = 'POST', body = false, onErrorCallback = ()=>{}) => {
-
-  let options = {
-    method: method,
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/json', 
-    },
-  }
-  if(body)
-    options.body = JSON.stringify(body);
-
-  return fetch(url, options)
-    .then(res => {
-      if (!res.ok) {
-        onErrorCallback();
-        console.error(res)
-      }
-      return res;
-    })
-
 }
