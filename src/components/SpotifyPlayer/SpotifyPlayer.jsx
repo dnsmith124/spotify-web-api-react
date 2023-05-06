@@ -9,7 +9,7 @@ import { faMobile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
 import { handleUpdatePlaybackState } from '../../utilities/SpotifyFunctions';
-import { handlePausePlay } from '../../utilities/playbackFunctions';
+import { handlePausePlay, handleNextPrevious } from '../../utilities/playbackFunctions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -55,15 +55,15 @@ const SpotifyPlayer = () => {
         position="top-center"
       />
       <div className="flex justify-between w-full">
-        <div>
+        <div className="w-80">
           <div className='flex'>
             <img 
               src={albumArtURL}
               alt={albumArtAltText} 
-              className="mr-[20px]"
+              className="mr-[20px] w-16 h-16 object-fill object-center"
             />
             <div className="grid content-center">
-              <p className="font-bold">{playbackItemName}</p>
+              <p className="font-bold overflow-hidden text-ellipsis whitespace-nowrap">{playbackItemName}</p>
               <p className="text-[14px] text-gray-400">{playbackItemArtist}</p>
             </div>
           </div>
@@ -71,7 +71,7 @@ const SpotifyPlayer = () => {
         <div className="flex">
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all rotate-180"
-            onClick={()=>{}}
+            onClick={()=>handleNextPrevious(false, token, dispatch)}
           />
           {
             (currentPlaybackState !== null && currentPlaybackState.is_playing)
@@ -86,7 +86,7 @@ const SpotifyPlayer = () => {
           }
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-[35px] cursor-pointer hover:scale-[1.05] transition-all"
-            onClick={()=>{}}
+            onClick={()=>handleNextPrevious(true, token, dispatch)}
           />
         </div>
         <div className="flex items-center px-[80px] relative">
