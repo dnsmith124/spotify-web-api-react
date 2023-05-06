@@ -15,16 +15,18 @@ This project is currently in development. Users can authenticate with Spotify, t
 - [x] User Authentication
 - [x] Display & Browse User's Saved Playlists
 - [x] Light/Dark Mode Toggle
-- [ ] Playback 
+- [x] Playback 
 - [ ] Display User's Saved Tracks
+- [ ] Homepage Features (Recommended playlists/albums, recent plays, etc.)
 - [ ] Playlist Editing/Creation/Deletion 
 - [ ] Artist/Song/Playlist Search 
 
-<!-- ## Project Screen Shot(s)
+## Project Screen Shot(s)
 
-[ PRETEND SCREEN SHOT IS HERE ]
+![Dark Mode](/src/assets/screenshot1.png?raw=true "Dark Mode")
 
-[ PRETEND OTHER SCREEN SHOT IS HERE ] -->
+![Light Mode](/src/assets/screenshot2.png?raw=true "Light Mode")
+
 
 ## Technologies used
 
