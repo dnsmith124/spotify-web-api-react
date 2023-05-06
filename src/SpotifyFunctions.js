@@ -1,3 +1,5 @@
+import { wait } from "./utilities/utilities";
+
 /**
  * Handles fetch errors and calls the onErrorCallback function if specified.
  * @param {Response} response - The response object from a fetch call.
@@ -7,6 +9,7 @@
 export const handleFetchErrors = (response, onErrorCallback = () => console.log('No error callback function specified.')) => {
   if(!response.ok) {
     onErrorCallback(response);
+    console.log(response)
     throw Error(response.statusText);
   }
   return response
@@ -83,17 +86,86 @@ export const handleLogin = async (clientId, redirectUri) => {
 /**
  * This function retrieves the user's Spotify profile information by making a GET request to the Spotify Web API.
  * @param {string} token - The access token required for authorization to the Spotify API.
- * @returns {Promise<Object>} A promise that resolves to an object containing the user's profile information.
+ * @param {function} dispatch - Function that updates the application state.
+ * @returns {void}
 */
-export const getProfile = async (token) => {
+export const handleUpdateProfile = async (token, dispatch) => {
 
-  const response = await fetch('https://api.spotify.com/v1/me', {
+  fetch('https://api.spotify.com/v1/me', {
     headers: {
       Authorization: 'Bearer ' + token
     }
-  }).then(handleFetchErrors);
+  })
+  .then(handleFetchErrors)
+  .then(res => res.json())
+  .then(
+    (user) => {
+      let newUser = user;
+      dispatch({
+        type: "SET_USER",
+        user: newUser,
+      });
+      getUserPlaylists(token, newUser?.id)
+        .then(
+          (playlists) => {
+            dispatch({
+              type: "SET_PLAYLISTS",
+              playlists,
+            });
+          }
+        )
+    }
+  )
+}
 
-  return await response.json();
+/**
+ * This function retrieves the user's playback state by making a GET request to the Spotify Web API.
+ * @param {string} token - The access token required for authorization to the Spotify API.
+ * @param {function} dispatch - Function that updates the application state.
+ * @returns {void} 
+*/
+export const handleUpdatePlaybackState = async (token, dispatch) => {
+  fetch('https://api.spotify.com/v1/me/player', {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  })
+  .then(handleFetchErrors)
+  .then(res => res.json())
+  .then(async data => {
+
+    // manual wait required, since checking for playback state after updating state 
+    // through another endpoint (play/pause/etc.) doesn't return the new state immediately
+    // even when the requests are properly chained
+    await wait(750);
+
+    dispatch({
+      type: "SET_CURRENT_PLAYBACK_STATE",
+      currentPlaybackState: data,
+    });
+  })
+}
+
+/**
+ * This function retrieves the user's available devices by making a GET request to the Spotify Web API.
+ * @param {string} token - The access token required for authorization to the Spotify API.
+ * @param {function} dispatch - Function that updates the application state.
+ * @returns {void}
+*/
+export const handleUpdateAvailableDevices = async (token, dispatch) => {
+  fetch('https://api.spotify.com/v1/me/player/devices', {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  })
+  .then(handleFetchErrors)
+  .then(res => res.json())
+  .then(data => {
+    dispatch({
+      type: "SET_AVAILABLE_DEVICES",
+      availableDevices: data,
+    });
+  })
 }
 
 /**
@@ -112,7 +184,12 @@ export const getUserPlaylists = async (token, userId, limit = 50) => {
   return await response.json();
 }
 
-export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispatch, spotify) => {
+/**
+ * This function retrieves the user's playlists by making a GET request to the Spotify Web API.
+ * @param {string} token - The access token required for authorization to the Spotify API.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the user's playlists.
+*/
+export const handleApplicationInitialization = async (clientId, redirectUri, code, dispatch, spotify) => {
   const verifier = localStorage.getItem("code_verifier");
 
   const params = new URLSearchParams();
@@ -139,24 +216,8 @@ export const handleFetchAndSetToken = async (clientId, redirectUri, code, dispat
       token: newToken,
     });
     spotify.setAccessToken(newToken);
-    getProfile(newToken)
-      .then(
-        (user) => {
-          let newUser = user;
-          dispatch({
-            type: "SET_USER",
-            user: newUser,
-          });
-          getUserPlaylists(newToken, newUser?.id)
-            .then(
-              (playlists) => {
-                dispatch({
-                  type: "SET_PLAYLISTS",
-                  playlists,
-                });
-              }
-            )
-        }
-      )
+    handleUpdateProfile(newToken, dispatch);
+    handleUpdatePlaybackState(newToken, dispatch);
+    handleUpdateAvailableDevices(newToken, dispatch);
   })
 }

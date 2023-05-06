@@ -3,7 +3,7 @@ import SpotifyLogin from '../SpotifyLogin/SpotifyLogin';
 import SpotifyApp from '../SpotifyApp/SpotifyApp';
 import SpotifyWebApi from "spotify-web-api-js";
 import { useDataLayerValue } from '../../DataLayer';
-import { handleLogin, handleFetchAndSetToken } from '../../SpotifyAuth';
+import { handleLogin, handleApplicationInitialization } from '../../SpotifyFunctions';
 
 const spotify = new SpotifyWebApi();
 
@@ -18,7 +18,7 @@ const Spotify = () => {
     let code = urlParams.get('code');
 
     if((code && !token) && spotifyInstance) {
-      handleFetchAndSetToken(clientId, redirectUri, code, dispatch, spotifyInstance);
+      handleApplicationInitialization(clientId, redirectUri, code, dispatch, spotifyInstance);
     }
     if(!spotifyInstance) {
       dispatch({
