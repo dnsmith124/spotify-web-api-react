@@ -98,7 +98,7 @@ const SpotifyPlayer = () => {
           <div>
             <OutsideClickHandler 
               onOutsideClick={handleCloseAvailableDevices} 
-              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
+              className={`transition-opacity absolute bottom-[110%] p-[20px] rounded-md bg-gray-200 dark:bg-spotify-hover-gray left-[50%] translate-x-[-50%] ${availableDevicesOpen ? `opacity-100` : `opacity-0`}`}
               >
               <p className="font-bold whitespace-nowrap mb-[10px]">Available Devices:</p>
               {
@@ -121,7 +121,7 @@ const SpotifyPlayer = () => {
                   )
                 })
               }
-              <span className="block h-0 w-0 border-transparent border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
+              <span className="block h-0 w-0 border-transparent border-t-gray-200 dark:border-t-spotify-hover-gray border-[10px] absolute left-[50%] bottom-[-20px] translate-x-[-50%]"></span>
             </OutsideClickHandler>
           </div>
         </div>

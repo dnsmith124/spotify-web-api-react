@@ -11,7 +11,7 @@ const TrackRow = ({ track, index }) => {
         handlePlayTrack(token, track.uri, dispatch);
       }}
       className="grid p-[5px] gap-y-[20px] gap-x-[15px] transition-colors 
-        grid-cols-[40px_40px_1fr_.5fr] my-5px hover:bg-spotify-hover-gray
+        grid-cols-[40px_40px_1fr_.5fr] my-5px hover:bg-gray-100 dark:hover:bg-spotify-hover-gray
         items-center w-full" 
       target="_blank" 
       rel="noreferrer"
