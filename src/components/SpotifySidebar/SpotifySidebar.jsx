@@ -23,7 +23,7 @@ const SpotifySidebar = () => {
         screenWidth <= 768 &&
         <FontAwesomeIcon 
           icon={faBars} 
-          className="cursor-pointer dark:text-white text-spotify-dark-gray w-7 h-7 fixed top-6 left-5 z-10" 
+          className="cursor-pointer dark:text-white text-spotify-dark-gray w-7 h-7 fixed top-6 left-5 z-20" 
           onClick={(e)=>{e.stopPropagation(); setSidebarShowing(prev => !prev)}}
         />
       }
@@ -46,7 +46,7 @@ const SpotifySidebar = () => {
             md:static
             md:translate-x-0
             md:shadow-none
-            ${sidebarShowing ? 'translate-x-0' : '-translate-x-full shadow-none dark:shadow-none'}`} 
+            ${sidebarShowing ? 'translate-x-0 z-10' : '-translate-x-full shadow-none dark:shadow-none'}`} 
           onOutsideClick={handleCloseSidebar} 
           >
           <a href="/" className="block mb-5 ml-10 md:ml-0">

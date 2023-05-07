@@ -48,13 +48,13 @@ const SpotifyPlayer = () => {
   
 
   return(
-    <div className="p-5">
+    <div className="p-3 md:p-5">
       <ToastContainer 
         theme={darkMode ? 'dark' : 'light'} 
         position="top-center"
       />
       <div className="grid justify-center w-full md:flex md:justify-between">
-        <div className="w-80 mx-auto mb-4 md:mx-0 md:mb-0">
+        <div className="w-80 mx-auto mb-3 md:mx-0 md:mb-0">
           <div className='flex'>
             <img 
               src={albumArtURL}
@@ -67,7 +67,7 @@ const SpotifyPlayer = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mb-4 md:mb-0 md:justify-normal">
+        <div className="flex justify-center mb-1 md:mb-0 md:justify-normal">
           <Forward 
             className="dark:fill-[#bababa] fill-spotify-dark-gray w-9 cursor-pointer hover:scale-[1.05] transition-all rotate-180"
             onClick={()=>handleNextPrevious(false, token, dispatch)}
