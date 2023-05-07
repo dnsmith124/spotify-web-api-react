@@ -14,10 +14,10 @@ const SpotifyBody = () => {
   }, [currentPlaylistID, dispatch, spotifyInstance, token]);
 
   return (
-    <div className="dark:bg-spotify-dark-gray pb-[20px] dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray col-span-2 md:col-span-1">
+    <div className="dark:bg-spotify-dark-gray pb-5 dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray col-span-2 md:col-span-1">
       <SpotifyHeader />
       {currentPlaylist !== null
-        ? <div className="px-[30px]">
+        ? <div className="px-3 md:px-7">
             <div className="md:flex">
               <img src={currentPlaylist?.images[0]?.url} alt=""  className="w-[250px] mx-auto mb-3 md:mb-0 md:mr-6 md:ml-0"/>
               <div className="grid text-center md:text-left md:content-end">
@@ -26,7 +26,7 @@ const SpotifyBody = () => {
                 <p>{currentPlaylist?.description}</p>
               </div>
             </div>
-            <div className=" pt-[30px]">
+            <div className="pt-7">
               {currentPlaylist?.tracks.items.map((item, i) => (
                 <TrackRow track={item.track} index={i} key={i} />
               ))}

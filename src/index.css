@@ -32,5 +32,8 @@
     transform: translateX(24px);
   }
 
+  .sidebar-items-height {
+    height: calc(100% - 150px);
+  }
 }
 

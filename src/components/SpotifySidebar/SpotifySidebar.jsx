@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SpotifySidebarOption from "../SpotifySidebarOption/SpotifySidebarOption";
+import OutsideClickHandler from "../OutsideClickHandler/OutsideClickHandler";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDataLayerValue } from "../../DataLayer";
 import { useScreenWidth } from "../../utilities/customHooks";
@@ -12,6 +13,10 @@ const SpotifySidebar = () => {
   const screenWidth = useScreenWidth();
   const [sidebarShowing, setSidebarShowing] = useState(false);
 
+  const handleCloseSidebar = () => {
+    setSidebarShowing(false)
+  }
+
   return (
     <aside className="absolute top-0 bottom-[105px] md:relative">
       {
@@ -19,29 +24,30 @@ const SpotifySidebar = () => {
         <FontAwesomeIcon 
           icon={faBars} 
           className="cursor-pointer dark:text-white text-spotify-dark-gray w-7 h-7 fixed top-6 left-5 z-10" 
-          onClick={()=>{setSidebarShowing(prev => !prev)}}
+          onClick={(e)=>{e.stopPropagation(); setSidebarShowing(prev => !prev)}}
         />
       }
-        <div className={`
-          bg-white
-          shadow-xl
-          shadow-black
-          p-5 
-          border-r-px 
-          min-h-screen 
-          fixed
-          transition-all
-          ease-out
-          duration-300
-          h-full
-        dark:bg-black 
-          dark:border-r-0 
-          md:opacity-100 
-          md:h-auto
-          md:static
-          md:translate-x-0
-          md:shadow-none
-          ${sidebarShowing ? 'translate-x-0' : '-translate-x-full shadow-none dark:shadow-none'}`} 
+        <OutsideClickHandler 
+          className={`
+            bg-white
+            shadow-xl
+            shadow-black
+            p-5 
+            border-r-px 
+            min-h-screen 
+            fixed
+            transition-all
+            ease-out
+            duration-300
+            h-full
+          dark:bg-black 
+            dark:border-r-0 
+            md:opacity-100 
+            md:static
+            md:translate-x-0
+            md:shadow-none
+            ${sidebarShowing ? 'translate-x-0' : '-translate-x-full shadow-none dark:shadow-none'}`} 
+          onOutsideClick={handleCloseSidebar} 
           >
           <a href="/" className="block mb-5 ml-10 md:ml-0">
             <img
@@ -52,12 +58,12 @@ const SpotifySidebar = () => {
           </a>
           {/* Playlists */}
           <hr className="h-px my-[8px] bg-gray-200 border-0 dark:bg-gray-700" />
-          <div className="h-full overflow-scroll">
+          <div className="overflow-scroll sidebar-items-height md:h-full">
             {playlists?.items?.map((playlist) => (
-              <SpotifySidebarOption title={playlist.name} id={playlist.id} key={playlist.id} />
+              <SpotifySidebarOption title={playlist.name} id={playlist.id} key={playlist.id} handleClick={handleCloseSidebar} />
             ))}
           </div>
-        </div>
+        </OutsideClickHandler>
     </aside>
   )
 }

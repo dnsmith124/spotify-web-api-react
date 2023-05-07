@@ -31,10 +31,9 @@ const SpotifyPlayer = () => {
     ? currentPlaybackState.item?.artists[0].name
     : '';  
 
-  const handleCloseAvailableDevices = useCallback(() => {
-    if(availableDevicesOpen)
-      setAvailableDevicesOpen(false)
-  }, [availableDevicesOpen]);
+  const handleCloseAvailableDevices = () => {
+    setAvailableDevicesOpen(false)
+  }
 
   useEffect(() => {
     // Poll for playback state 
