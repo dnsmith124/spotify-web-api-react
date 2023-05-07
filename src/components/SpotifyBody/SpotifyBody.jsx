@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDataLayerValue } from "../../DataLayer";
 import { handleUpdateCurrentPlaylist } from "../../utilities/SpotifyFunctions";
 import TrackRow from "../TrackRow/TrackRow";
@@ -14,7 +14,7 @@ const SpotifyBody = () => {
   }, [currentPlaylistID, dispatch, spotifyInstance, token]);
 
   return (
-    <div className="dark:bg-spotify-dark-gray pb-[20px] dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray">
+    <div className="dark:bg-spotify-dark-gray pb-[20px] dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray col-span-2 md:col-span-1">
       <SpotifyHeader />
       {currentPlaylist !== null
         ? <div className="px-[30px]">

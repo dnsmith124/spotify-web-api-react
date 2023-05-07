@@ -1,4 +1,3 @@
-import React from "react";
 import SpotifyBody from "../SpotifyBody/SpotifyBody";
 import SpotifySidebar from "../SpotifySidebar/SpotifySidebar";
 import SpotifyFooter from '../SpotifyFooter/SpotifyFooter';

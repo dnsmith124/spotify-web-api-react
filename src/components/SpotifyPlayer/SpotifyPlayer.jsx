@@ -1,12 +1,12 @@
+import { useEffect, useState, useCallback } from 'react';
 import { ReactComponent as Play } from '../../assets/icons/play.svg';
 import { ReactComponent as Forward } from '../../assets/icons/forward.svg';
 import { ReactComponent as Pause } from '../../assets/icons/pause.svg';
 import placeholder from '../../assets/placeholder.png'; 
-import { useDataLayerValue } from '../../DataLayer';
-import { useEffect, useState, useCallback } from 'react';
-import { faComputer } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
+import { faComputer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useDataLayerValue } from '../../DataLayer';
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
 import { handleUpdatePlaybackState } from '../../utilities/SpotifyFunctions';
 import { handlePausePlay, handleNextPrevious } from '../../utilities/playbackFunctions';
