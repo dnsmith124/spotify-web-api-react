@@ -29,6 +29,10 @@ Users can authenticate with Spotify, then browse through their saved playlists. 
 
 ![Light Mode](/src/assets/screenshot2.png?raw=true "Light Mode")
 
+![Mobile](/src/assets/mob-ss1.png?raw=true "Mobile")
+
+![Mobile (playlist drawer open)](/src/assets/mob-ss2.png?raw=true "Mobile (playlist drawer open)")
+
 
 ## Technologies used
 
