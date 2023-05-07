@@ -52,6 +52,7 @@ const SpotifyPlayer = () => {
       <ToastContainer 
         theme={darkMode ? 'dark' : 'light'} 
         position="top-center"
+        className="z-50 translate-y-24 md:translate-y-0"
       />
       <div className="grid justify-center w-full md:flex md:justify-between">
         <div className="w-80 mx-auto mb-3 md:mx-0 md:mb-0">
