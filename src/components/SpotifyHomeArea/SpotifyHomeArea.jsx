@@ -4,15 +4,12 @@ import SpotifyCard from "../SpotifyCard/SpotifyCard";
 const SpotifyHomeArea = ({ homeData }) => {
   const [{ homeAreaData, user }] = useDataLayerValue();
 
-  console.log(homeAreaData);
-
   return(
     <div>
       <div className="header px-10">
         <h2 className="text-3xl break-words mb-2 lg:text-6xl">Welcome back {user.display_name}</h2>
       </div>
       <div className="cards-container">
-
         {
           homeAreaData.topArtists &&
           <SpotifyCard className="top-artists">
@@ -20,7 +17,6 @@ const SpotifyHomeArea = ({ homeData }) => {
             <ol>
               {
                 homeAreaData.topArtists.items.map((artist, i) => {
-                  console.log(artist)
                   return(
                     <li key={artist.id}>{artist.name}</li>
                   ) 
@@ -36,7 +32,6 @@ const SpotifyHomeArea = ({ homeData }) => {
             <ol>
               {
                 homeAreaData.topTracks.items.map((track, i) => {
-                  console.log(track)
                   return(
                     <li key={track.id}>{track.name}</li>
                   ) 

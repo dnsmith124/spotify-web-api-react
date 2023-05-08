@@ -231,7 +231,7 @@ export const handleUpdateCurrentPlaylist = async (token, playlistID, dispatch) =
       .then(() => {
         dispatch({
           type: "SET_CURRENT_PLAYLIST",
-          currentPlaylist: 'home',
+          currentPlaylist: {id:'home'},
         });
         dispatch({
           type: "SET_HOME_AREA_DATA",
