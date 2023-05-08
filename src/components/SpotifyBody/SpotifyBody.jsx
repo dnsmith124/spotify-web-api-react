@@ -8,8 +8,6 @@ import SpotifyHeader from "../SpotifyHeader/SpotifyHeader";
 const SpotifyBody = () => {
   const [{ currentPlaylist, currentPlaylistID, token }, dispatch] = useDataLayerValue();
 
-  console.log(currentPlaylist)
-
   useEffect(() => { 
     if(currentPlaylistID) {
       handleUpdateCurrentPlaylist(token, currentPlaylistID, dispatch);
