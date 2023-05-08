@@ -1,4 +1,5 @@
 import { wait, handleFetchErrors } from "./utilities";
+import { toast } from 'react-toastify';
 
 /**
  * Function to handle requests to the Spotify API using fetch and an access token.
@@ -134,20 +135,31 @@ export const handleUpdateProfile = async (token, dispatch) => {
  * @returns {void} 
 */
 export const handleUpdatePlaybackState = async (token, dispatch) => {
+
+  const toastId = 'no-active-device';
+
+  // manual wait required, since checking for playback state after updating state 
+  // through another endpoint (play/pause/etc.) doesn't return the new state immediately
+  // even when the requests are properly chained
+  await wait(750);
+
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player', 'GET')
-  .then(handleFetchErrors)
-  .then(res => res.json())
+  .then(res => {
+    if(res.status === 204) {
+      toast.error("No active device found. Try starting playback on one of your devices, then try again.", {toastId: toastId, autoClose: false})
+      handleFetchErrors(res);
+      return res.text();
+    } 
+    return res.json()
+  })
   .then(async data => {
-
-    // manual wait required, since checking for playback state after updating state 
-    // through another endpoint (play/pause/etc.) doesn't return the new state immediately
-    // even when the requests are properly chained
-    await wait(750);
-
-    dispatch({
-      type: "SET_CURRENT_PLAYBACK_STATE",
-      currentPlaybackState: data,
-    });
+    if(data) {
+      toast.dismiss(toastId);
+      dispatch({
+        type: "SET_CURRENT_PLAYBACK_STATE",
+        currentPlaybackState: data,
+      });
+    }
   })
 }
 

@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as Play } from '../../assets/icons/play.svg';
 import { ReactComponent as Forward } from '../../assets/icons/forward.svg';
 import { ReactComponent as Pause } from '../../assets/icons/pause.svg';
 import placeholder from '../../assets/placeholder.png'; 
-import { faMobile } from '@fortawesome/free-solid-svg-icons'
-import { faComputer } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMobile } from '@fortawesome/free-solid-svg-icons';
+import { faComputer } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDataLayerValue } from '../../DataLayer';
 import OutsideClickHandler from '../OutsideClickHandler/OutsideClickHandler';
 import { handleUpdatePlaybackState } from '../../utilities/SpotifyFunctions';
@@ -89,7 +89,7 @@ const SpotifyPlayer = () => {
             onClick={()=>handleNextPrevious(true, token, dispatch)}
           />
         </div>
-        <div className="flex justify-center relative order-first md:order-last">
+        <div className="flex justify-center items-center relative order-first w-fit md:order-last">
           <FontAwesomeIcon 
             icon={faComputer} 
             className="cursor-pointer dark:text-[#bababa] text-spotify-dark-gray p-2 md:px-20" 
