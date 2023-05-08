@@ -12,7 +12,6 @@ export const wait = (ms) => {
 export const handleFetchErrors = (response, onErrorCallback = () => console.log('No error callback function specified.')) => {
   if(!response.ok) {
     onErrorCallback(response);
-    console.log(response)
     throw Error(response.statusText);
   }
   return response
