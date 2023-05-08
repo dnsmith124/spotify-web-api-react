@@ -20,7 +20,7 @@ const ThemeToggle = ({className}) => {
       />
       <label 
         htmlFor="checkbox" 
-        className="checkbox-label bg-neutral-700 w-[50px] h-[26px] rounded-full relative p-[5px] cursor-pointer flex justify-between align-middle"
+        className="checkbox-label bg-spotify-dark-gray w-[50px] h-[26px] rounded-full relative p- p-[5px] cursor-pointer flex justify-between align-middle"
         >
           <FontAwesomeIcon icon={faMoon} className="text-yellow-light" />
           <FontAwesomeIcon icon={faSun} className="text-yellow-dark"/>
