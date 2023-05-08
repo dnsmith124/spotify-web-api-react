@@ -5,7 +5,7 @@ const SpotifyLogin = ({ handleLogin }) => {
   return (
     <div className="text-center py-[20px]">
       <div className="max-w-[1400px] mx-auto grid content-end">
-        <ThemeToggle className="mr-0 ml-auto inline-block"/>
+        <ThemeToggle className="mr-0 ml-auto inline-block px-4"/>
       </div>
       <div className="mb-[50px] pt-[100px]">
         <a href="/" className="inline">

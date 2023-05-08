@@ -5,13 +5,15 @@ import TrackRow from "../TrackRow/TrackRow";
 import SpotifyHeader from "../SpotifyHeader/SpotifyHeader";
 
 const SpotifyBody = () => {
-  const [{ currentPlaylist, currentPlaylistID, token, spotifyInstance }, dispatch] = useDataLayerValue();
+  const [{ currentPlaylist, currentPlaylistID, token }, dispatch] = useDataLayerValue();
+
+  console.log(currentPlaylist)
 
   useEffect(() => { 
     if(currentPlaylistID) {
       handleUpdateCurrentPlaylist(token, currentPlaylistID, dispatch);
     }
-  }, [currentPlaylistID, dispatch, spotifyInstance, token]);
+  }, [currentPlaylistID, dispatch, token]);
 
   return (
     <div className="dark:bg-spotify-dark-gray pb-5 dark:bg-gradient-to-b dark:from-spotify-dark-red dark:to-spotify-dark-gray col-span-2 md:col-span-1">
