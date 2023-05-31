@@ -146,7 +146,10 @@ export const handleUpdatePlaybackState = async (token, dispatch) => {
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player', 'GET')
   .then(res => {
     if(res.status === 204) {
-      toast.error("No active device found. Try starting playback on one of your devices, then try again.", {toastId: toastId, autoClose: false})
+      toast.error(
+        "No active device found. Try starting playback on one of your devices, then try again.", 
+        {toastId: toastId, autoClose: false, closeButton: false}
+      )
       handleFetchErrors(res);
       return res.text();
     } 
@@ -207,14 +210,14 @@ export const handleUpdateCurrentPlaylist = async (token, playlistID, dispatch) =
   
   if(playlistID === 'home') {
     let homeAreaData = {};
-    handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/artists?limit=10`, 'GET')
+    handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/artists?limit=6`, 'GET')
     .then(handleFetchErrors)
     .then(res => res.json())
     .then(data => {
       homeAreaData.topArtists = data;
     })
     .then(
-      handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/tracks?limit=10`, 'GET')
+      handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/tracks?limit=6`, 'GET')
       .then(handleFetchErrors)
       .then(res => res.json())
       .then(data => {
