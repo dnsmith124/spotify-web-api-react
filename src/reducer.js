@@ -4,6 +4,7 @@ export const initialState = {
   playlists: [],
   currentPlaylistID: null,
   currentPlaylist: null,
+  homeAreaData: null,
   currentPlaybackState: null,
   availableDevices: null,
   discoverWeekly: null,
@@ -38,6 +39,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         currentPlaylist: action.currentPlaylist,
+      };
+    case "SET_HOME_AREA_DATA":
+      return {
+        ...state,
+        homeAreaData: action.homeAreaData,
       };
     case "SET_CURRENT_PLAYBACK_STATE":
       if(state.currentPlaybackState === action.currentPlaybackState)

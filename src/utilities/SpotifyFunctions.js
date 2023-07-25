@@ -146,7 +146,10 @@ export const handleUpdatePlaybackState = async (token, dispatch) => {
   handleSpotifyAPIRequest(token, 'https://api.spotify.com/v1/me/player', 'GET')
   .then(res => {
     if(res.status === 204) {
-      toast.error("No active device found. Try starting playback on one of your devices, then try again.", {toastId: toastId, autoClose: false})
+      toast.error(
+        "No active device found. Try starting playback on one of your devices, then try again.", 
+        {toastId: toastId, autoClose: false, closeButton: false}
+      )
       handleFetchErrors(res);
       return res.text();
     } 
@@ -197,6 +200,62 @@ export const getUserPlaylists = async (token, userId, limit = 50) => {
 }
 
 /**
+ * Updates the current playlist in the state by making a GET request to Spotify API
+ * @param {string} token - Authorization token for Spotify API
+ * @param {string} playlistID - ID of the playlist to be updated
+ * @param {function} dispatch - Function used to dispatch state updates
+ * @returns {void}
+*/
+export const handleUpdateCurrentPlaylist = async (token, playlistID, dispatch) => {
+  
+  if(playlistID === 'home') {
+    let homeAreaData = {};
+    handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/artists?limit=6`, 'GET')
+    .then(handleFetchErrors)
+    .then(res => res.json())
+    .then(data => {
+      homeAreaData.topArtists = data;
+    })
+    .then(
+      handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/me/top/tracks?limit=6`, 'GET')
+      .then(handleFetchErrors)
+      .then(res => res.json())
+      .then(data => {
+        homeAreaData.topTracks = data;
+      })
+      .then(
+        handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/browse/featured-playlists?limit=20`, 'GET')
+        .then(handleFetchErrors)
+        .then(res => res.json())
+        .then(data => {
+          homeAreaData.featuredPlaylists = data;
+        })
+      )
+      .then(() => {
+        dispatch({
+          type: "SET_CURRENT_PLAYLIST",
+          currentPlaylist: {id:'home'},
+        });
+        dispatch({
+          type: "SET_HOME_AREA_DATA",
+          homeAreaData: homeAreaData,
+        });
+      })
+    )
+  } else {
+    handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/playlists/${playlistID}`, 'GET')
+    .then(handleFetchErrors)
+    .then(res => res.json())
+    .then(data => {
+      dispatch({
+        type: "SET_CURRENT_PLAYLIST",
+        currentPlaylist: data,
+      });
+    })
+  }
+}
+
+/**
  * Initializes the application by exchanging the authorization code for an access token,
  * setting the token in state, and calling functions to update the user profile, playback state,
  * and available devices. If the access code has expired, the user is redirected to the home page.
@@ -235,25 +294,7 @@ export const handleApplicationInitialization = async (clientId, redirectUri, cod
     handleUpdateProfile(newToken, dispatch);
     handleUpdatePlaybackState(newToken, dispatch);
     handleUpdateAvailableDevices(newToken, dispatch);
+    handleUpdateCurrentPlaylist(newToken, 'home', dispatch);
   })
 }
 
-/**
- * Updates the current playlist in the state by making a GET request to Spotify API
- * @param {string} token - Authorization token for Spotify API
- * @param {string} playlistID - ID of the playlist to be updated
- * @param {function} dispatch - Function used to dispatch state updates
- * @returns {void}
-*/
-export const handleUpdateCurrentPlaylist = async (token, playlistID, dispatch) => {
-  
-  handleSpotifyAPIRequest(token, `https://api.spotify.com/v1/playlists/${playlistID}`, 'GET')
-  .then(handleFetchErrors)
-  .then(res => res.json())
-  .then(data => {
-    dispatch({
-      type: "SET_CURRENT_PLAYLIST",
-      currentPlaylist: data,
-    });
-  })
-}

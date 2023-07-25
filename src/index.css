@@ -24,6 +24,11 @@
   body.dark {background-color: #292c35;} /* #9b59b6 */
   
   body.dark h1, body.dark .support a {color: #fff;}
+
+  ol {
+    list-style-type: decimal;
+    padding-left: 25px;
+  }
 }
 
 @layer components {

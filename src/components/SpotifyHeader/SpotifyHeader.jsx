@@ -8,7 +8,7 @@ const SpotifyHeader = () => {
 
   return (
     <header className="p-4 sticky top-0">
-      <div className="max-w-screen-xl flex justify-end ml-auto mr-auto">
+      <div className="flex justify-end ml-auto mr-auto">
         <div >
           {
             user &&

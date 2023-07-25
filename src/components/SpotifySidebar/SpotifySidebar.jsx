@@ -41,7 +41,8 @@ const SpotifySidebar = ({isOpen, handleCloseSidebar}) => {
         </a>
         {/* Playlists */}
         <hr className="h-px my-[8px] bg-gray-200 border-0 dark:bg-gray-700" />
-        <div className="overflow-scroll sidebar-items-height md:h-full">
+        <div className="sidebar-items-height md:h-full">
+          <SpotifySidebarOption title="Home" id="home" handleClick={handleCloseSidebar} />
           {playlists?.items?.map((playlist) => (
             <SpotifySidebarOption title={playlist.name} id={playlist.id} key={playlist.id} handleClick={handleCloseSidebar} />
           ))}
