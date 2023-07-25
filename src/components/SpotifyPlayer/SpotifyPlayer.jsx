@@ -70,7 +70,7 @@ const SpotifyPlayer = () => {
         </div>
         <div className="flex justify-center mb-1 md:mb-0 md:justify-normal">
           <Forward 
-            className="dark:fill-[#bababa] fill-spotify-dark-gray w-9 cursor-pointer hover:scale-[1.05] transition-all rotate-180"
+            className="dark:fill-spotify-light-gray fill-spotify-dark-gray w-9 cursor-pointer hover:scale-[1.05] transition-all rotate-180"
             onClick={()=>handleNextPrevious(false, token, dispatch)}
           />
           {
@@ -85,14 +85,14 @@ const SpotifyPlayer = () => {
               />
           }
           <Forward 
-            className="dark:fill-[#bababa] fill-spotify-dark-gray w-9 cursor-pointer hover:scale-[1.05] transition-all"
+            className="dark:fill-spotify-light-gray fill-spotify-dark-gray w-9 cursor-pointer hover:scale-[1.05] transition-all"
             onClick={()=>handleNextPrevious(true, token, dispatch)}
           />
         </div>
         <div className="flex justify-center items-center relative order-first w-fit md:order-last">
           <FontAwesomeIcon 
             icon={faComputer} 
-            className="cursor-pointer dark:text-[#bababa] text-spotify-dark-gray p-2 md:px-20" 
+            className="cursor-pointer dark:text-spotify-light-gray text-spotify-dark-gray p-2 md:px-20" 
             onClick={(e)=>{e.stopPropagation();setAvailableDevicesOpen(prev => !prev)}}
           />
           <div>

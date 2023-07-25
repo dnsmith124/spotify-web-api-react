@@ -20,12 +20,12 @@ const SpotifyBody = () => {
       <SpotifyHeader />
       {
         currentPlaylist === null 
-        ? <h2 className="text-center text-[40px] pt-[50px]">No Playlist Selected</h2>
+        ? <h2 className="text-center text-4xl pt-12">No Playlist Selected</h2>
         : currentPlaylist.id === 'home' 
           ? <SpotifyHomeArea />
           :  <div className="px-3 md:px-7">
                 <div className="md:flex">
-                  <img src={currentPlaylist?.images[0]?.url} alt=""  className="w-[250px] mx-auto mb-3 md:mb-0 md:mr-6 md:ml-0"/>
+                  <img src={currentPlaylist?.images[0]?.url} alt=""  className="w-64 mx-auto mb-3 md:mb-0 md:mr-6 md:ml-0"/>
                   <div className="grid text-center md:text-left md:content-end">
                     <p className="md:mb-6">Playlist</p>
                     <h2 className="text-3xl break-words mb-2 lg:text-6xl"><a href={currentPlaylist?.external_urls["spotify"]} target="_blank" rel="noreferrer">{currentPlaylist?.name}</a></h2>
