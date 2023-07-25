@@ -7,21 +7,17 @@ A React app recreating Spotify's UI.
 Demo available here: [https://music.dnswebdev.com/](https://music.dnswebdev.com/)
 
 ## Project Status
+#### NOTE: This project uses Spotify's web api, and is currently in developer mode. This means that only users who have been manually added can properly authenticate.
 
-This project is currently in development. 
-
-Users can authenticate with Spotify, then browse through their saved playlists. Playback can be controlled as well (play/pause/skip forward/skip back), and users can play songs from their saved playlists by clicking them. 
+Approved users can authenticate with Spotify, then browse through their saved playlists. Playback can be controlled as well (play/pause/skip forward/skip back), and users can play songs from their saved playlists by clicking them. The app features both a dark and light mode, the design of which has been informed by Spotify's publicly available brand standards. 
 
 ## Feature Roadmap
 
 - [x] User Authentication
 - [x] Display & Browse User's Saved Playlists
 - [x] Light/Dark Mode Toggle
-- [x] Playback 
-- [ ] Display User's Saved Tracks
-- [ ] Homepage Features (Recommended playlists/albums, recent plays, etc.)
-- [ ] Playlist Editing/Creation/Deletion 
-- [ ] Artist/Song/Playlist Search 
+- [x] Playback control
+- [x] Homepage Features (favorite artists and top tracks)
 
 ## Project Screen Shot(s)
 
