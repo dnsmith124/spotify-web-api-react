@@ -13,6 +13,7 @@ export default {
         'spotify-green': '#1db954',
         'spotify-black': '#191414',
         'spotify-dark-gray': "#202020",
+        'spotify-light-gray': "#bababa",
         'spotify-hover-gray': "#383234",
         'spotify-dark-red': '#4F1E18',
       },
