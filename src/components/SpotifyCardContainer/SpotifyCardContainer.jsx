@@ -1,4 +1,3 @@
-import Carousel from "nuka-carousel"
 
 const SpotifyCardContainer = ({ heading, className = '', children }) => {
 
